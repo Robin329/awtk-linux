@@ -147,7 +147,7 @@ OS_LINKFLAGS=' -Wl,--allow-multiple-definition '
 OS_LIBS = ['stdc++', 'm']
 OS_FLAGS='-Wall -Os -DFB_DEVICE_FILENAME=\\\"\"/dev/graphics/fb0\\\"\" '
 
-OS_LINKFLAGS= OS_LINKFLAGS + ' -Wl,-rpath=./bin -Wl,-rpath=./ '
+OS_LINKFLAGS= OS_LINKFLAGS + ' -Wl,-rpath=./bin -Wl,-rpath=./ -lpthread'
 
 if LCD_DEVICES =='drm' :
   #for drm
