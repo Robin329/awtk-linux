@@ -33,8 +33,8 @@ LCD_DIR        = joinPath(TK_LINUX_FB_ROOT, 'awtk-port/lcd_linux')
 INPUT_DIR      = joinPath(TK_LINUX_FB_ROOT, 'awtk-port/input_thread')
 
 # lcd devices
-LCD_DEVICES='fb'
-# LCD_DEVICES='drm'
+# LCD_DEVICES='fb'
+LCD_DEVICES='drm'
 # LCD_DEVICES='egl_for_fsl'
 # LCD_DEVICES='egl_for_x11'
 # LCD_DEVICES='egl_for_gbm'
@@ -57,7 +57,7 @@ INPUT_ENGINE='pinyin'
 
 COMMON_CCFLAGS=' -DHAS_STD_MALLOC -DHAS_STDIO -DHAS_FAST_MEMCPY -DWITH_VGCANVAS -DWITH_UNICODE_BREAK -DLINUX'
 COMMON_CCFLAGS=COMMON_CCFLAGS+' -DLOAD_ASSET_WITH_MMAP=1 -DWITH_SOCKET=1 '
-COMMON_CCFLAGS=COMMON_CCFLAGS+' -DWITH_ASSET_LOADER -DWITH_FS_RES -DHAS_GET_TIME_US64=1 ' 
+COMMON_CCFLAGS=COMMON_CCFLAGS+' -DWITH_ASSET_LOADER -DWITH_FS_RES -DHAS_GET_TIME_US64=1 '
 COMMON_CCFLAGS=COMMON_CCFLAGS+' -DSTBTT_STATIC -DSTB_IMAGE_STATIC -DWITH_STB_IMAGE -DWITH_STB_FONT -DWITH_TEXT_BIDI=1 '
 COMMON_CCFLAGS=COMMON_CCFLAGS+' -DAPP_TYPE=APP_MOBILE -DWITH_FAST_LCD_PORTRAIT '
 
@@ -104,14 +104,14 @@ OS_FLAGS='-Wall -Os -fno-strict-aliasing '
 #TSLIB_LIB_DIR=joinPath(TK_LINUX_FB_ROOT, '3rd/tslib/src/.libs')
 
 #for prebuild tslib
-TSLIB_LIB_DIR='/opt/28x/tslib/lib'
-TSLIB_INC_DIR='/opt/28x/tslib/include'
-TOOLS_PREFIX='/opt/28x/gcc-4.4.4-glibc-2.11.1-multilib-1.0/arm-fsl-linux-gnueabi/bin/arm-linux-'
+# TSLIB_LIB_DIR='/opt/28x/tslib/lib'
+# TSLIB_INC_DIR='/opt/28x/tslib/include'
+TOOLS_PREFIX='/home/robin/workspace/project/rk3399/ToolChain-6.3.1/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-'
 
 #TOOLS_PREFIX='/opt/poky/1.7/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-'
 
 #for qemu
-TOOLS_PREFIX='/opt/qemu/buildroot-2021.02.2/output/host/bin/arm-linux-'
+# TOOLS_PREFIX='/opt/qemu/buildroot-2021.02.2/output/host/bin/arm-linux-'
 TSLIB_LIB_DIR=''
 
 
@@ -134,25 +134,24 @@ STRIP=TOOLS_PREFIX+'strip',
 OS_LIBS = ['stdc++', 'pthread', 'rt', 'm', 'dl']
 
 #for android
-#TSLIB_LIB_DIR=''
-#TSLIB_INC_DIR=''
-#TOOLS_PREFIX='/opt/android-ndk-r20b/toolchains/llvm/prebuilt/linux-x86_64/bin/'
-#TOOLS_PREFIX='/Users/jim/android/android-ndk-r21d/toolchains/llvm/prebuilt/darwin-x86_64/bin/'
-#CC=TOOLS_PREFIX+'armv7a-linux-androideabi16-clang'
-#CXX=TOOLS_PREFIX+'armv7a-linux-androideabi16-clang++'
-#LD=TOOLS_PREFIX+'arm-linux-androideabi-ld'
-#AR=TOOLS_PREFIX+'arm-linux-androideabi-ar'
-#STRIP=TOOLS_PREFIX+'arm-linux-androideabi-strip'
-#RANLIB=TOOLS_PREFIX+"arm-linux-androideabi-ranlib"
-#OS_LINKFLAGS=' -Wl,--allow-multiple-definition '
-#OS_LIBS = ['stdc++', 'm']
-#OS_FLAGS='-Wall -Os -DFB_DEVICE_FILENAME=\\\"\"/dev/graphics/fb0\\\"\" '
+TSLIB_LIB_DIR=''
+TSLIB_INC_DIR=''
+TOOLS_PREFIX='/home/robin/workspace/project/android11/prebuilts/clang/host/linux-x86/clang-r383902b1/bin/'
+CC=TOOLS_PREFIX+'clang'
+CXX=TOOLS_PREFIX+'clang++'
+LD=TOOLS_PREFIX+'lld'
+AR=TOOLS_PREFIX+'llvm-ar'
+STRIP=TOOLS_PREFIX+'llvm-strip'
+RANLIB=TOOLS_PREFIX+"llvm-ranlib"
+OS_LINKFLAGS=' -Wl,--allow-multiple-definition '
+OS_LIBS = ['stdc++', 'm']
+OS_FLAGS='-Wall -Os -DFB_DEVICE_FILENAME=\\\"\"/dev/graphics/fb0\\\"\" '
 
-OS_LINKFLAGS= OS_LINKFLAGS + ' -Wl,-rpath=./bin -Wl,-rpath=./ ' 
+OS_LINKFLAGS= OS_LINKFLAGS + ' -Wl,-rpath=./bin -Wl,-rpath=./ '
 
 if LCD_DEVICES =='drm' :
   #for drm
-  OS_FLAGS=OS_FLAGS + ' -DWITH_LINUX_DRM=1 -I/usr/include/libdrm '
+  OS_FLAGS=OS_FLAGS + ' -DWITH_LINUX_DRM=1 -I/usr/include/libdrm -I/usr/include'
   OS_LIBS=OS_LIBS + ['drm']
 elif LCD_DEVICES =='egl_for_fsl':
   #for egl for fsl
@@ -179,7 +178,7 @@ OS_PROJECTS=[]
 CFLAGS=COMMON_CFLAGS
 LINKFLAGS=OS_LINKFLAGS;
 LIBPATH=[LIB_DIR, BIN_DIR] + OS_LIBPATH
-CCFLAGS=OS_FLAGS + COMMON_CCFLAGS 
+CCFLAGS=OS_FLAGS + COMMON_CCFLAGS
 
 STATIC_LIBS =['awtk_global', 'extwidgets', 'widgets', 'awtk_linux_fb', 'base', 'gpinyin', 'linebreak', 'fribidi']
 STATIC_LIBS += TKC_STATIC_LIBS
@@ -213,23 +212,23 @@ LIBS=STATIC_LIBS
 AWTK_STATIC_LIBS = LIBS
 OS_WHOLE_ARCHIVE =toWholeArchive(LIBS)
 
-CPPPATH=[TK_ROOT, 
-  TK_SRC, 
-  TK_3RD_ROOT, 
-  LCD_DIR, 
-  INPUT_DIR, 
-  joinPath(TK_SRC, 'ext_widgets'), 
-  joinPath(TK_SRC, 'custom_widgets'), 
-  joinPath(TK_ROOT, 'tools'), 
-  joinPath(TK_3RD_ROOT, 'agge'), 
-  joinPath(TK_3RD_ROOT, 'agg/include'), 
-  joinPath(TK_3RD_ROOT, 'mbedtls/include'), 
-  joinPath(TK_3RD_ROOT, 'mbedtls/3rdparty/everest/include'), 
-  joinPath(TK_3RD_ROOT, 'fribidi'), 
-  joinPath(TK_3RD_ROOT, 'libunibreak'), 
-  joinPath(TK_3RD_ROOT, 'gpinyin/include'), 
-  joinPath(TK_3RD_ROOT, 'gtest/googletest'), 
-  joinPath(TK_3RD_ROOT, 'gtest/googletest/include'), 
+CPPPATH=[TK_ROOT,
+  TK_SRC,
+  TK_3RD_ROOT,
+  LCD_DIR,
+  INPUT_DIR,
+  joinPath(TK_SRC, 'ext_widgets'),
+  joinPath(TK_SRC, 'custom_widgets'),
+  joinPath(TK_ROOT, 'tools'),
+  joinPath(TK_3RD_ROOT, 'agge'),
+  joinPath(TK_3RD_ROOT, 'agg/include'),
+  joinPath(TK_3RD_ROOT, 'mbedtls/include'),
+  joinPath(TK_3RD_ROOT, 'mbedtls/3rdparty/everest/include'),
+  joinPath(TK_3RD_ROOT, 'fribidi'),
+  joinPath(TK_3RD_ROOT, 'libunibreak'),
+  joinPath(TK_3RD_ROOT, 'gpinyin/include'),
+  joinPath(TK_3RD_ROOT, 'gtest/googletest'),
+  joinPath(TK_3RD_ROOT, 'gtest/googletest/include'),
   ] + OS_CPPPATH
 
 if TSLIB_LIB_DIR != '':
