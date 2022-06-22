@@ -131,27 +131,27 @@ LD=TOOLS_PREFIX+'g++',
 AR=TOOLS_PREFIX+'ar',
 RANLIB=TOOLS_PREFIX+'ranlib',
 STRIP=TOOLS_PREFIX+'strip',
-OS_LIBS = ['stdc++', 'pthread', 'rt', 'm', 'dl']
+OS_LIBS = ['c++_shared.', 'pthread', 'rt', 'm', 'dl']
 
 #for android
 TSLIB_LIB_DIR=''
 TSLIB_INC_DIR=''
-TOOLS_PREFIX='/home/robin/workspace/project/android11/prebuilts/clang/host/linux-x86/clang-r383902b1/bin/'
-CC=TOOLS_PREFIX+'clang'
-CXX=TOOLS_PREFIX+'clang++'
-LD=TOOLS_PREFIX+'lld'
-AR=TOOLS_PREFIX+'llvm-ar'
-STRIP=TOOLS_PREFIX+'llvm-strip'
-RANLIB=TOOLS_PREFIX+"llvm-ranlib"
+TOOLS_PREFIX='/home/robin/workspace/tools/android-ndk-r21e/toolchain/bin/'
+CC=TOOLS_PREFIX+'aarch64-linux-android-gcc'
+CXX=TOOLS_PREFIX+'aarch64-linux-android-g++'
+LD=TOOLS_PREFIX+'aarch64-linux-android-ld'
+AR=TOOLS_PREFIX+'aarch64-linux-android-ar'
+STRIP=TOOLS_PREFIX+'aarch64-linux-android-strip'
+RANLIB=TOOLS_PREFIX+"aarch64-linux-android-ranlib"
 OS_LINKFLAGS=' -Wl,--allow-multiple-definition '
-OS_LIBS = ['stdc++', 'm']
-OS_FLAGS='-Wall -Os -DFB_DEVICE_FILENAME=\\\"\"/dev/graphics/fb0\\\"\" '
+OS_LIBS = ['c++_shared', 'm']
+OS_FLAGS='-DAPP_STL=c++_shared -Wall -Os -DFB_DEVICE_FILENAME=\\\"\"/dev/graphics/fb0\\\"\" -DANDROID_STL=c++_shared'
 
-OS_LINKFLAGS= OS_LINKFLAGS + ' -Wl,-rpath=./bin -Wl,-rpath=./ -lpthread'
+OS_LINKFLAGS= OS_LINKFLAGS + ' -Wl,-rpath=./bin -Wl,-rpath=./'
 
 if LCD_DEVICES =='drm' :
   #for drm
-  OS_FLAGS=OS_FLAGS + ' -DWITH_LINUX_DRM=1 -I/usr/include/libdrm -I/usr/include'
+  OS_FLAGS=OS_FLAGS + ' -DWITH_LINUX_DRM=1 -I/usr/include/libdrm -I/home/robin/workspace/project/android11/external/libdrm'
   OS_LIBS=OS_LIBS + ['drm']
 elif LCD_DEVICES =='egl_for_fsl':
   #for egl for fsl
