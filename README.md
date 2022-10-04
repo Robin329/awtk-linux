@@ -4,7 +4,7 @@
 
 [awtk-linux-fb](https://github.com/zlgopen/awtk-linux-fb) 是 AWTK 在 arm-linux 上的移植。
 
-本项目以 [ZLG 周立功 linux 开发套件 AWork 平台 iMX287A 入门级 ARM9 开发板](https://item.taobao.com/item.htm?spm=a230r.1.14.1.29c8b3f8qxjYf7&id=536334628394&ns=1&abbucket=17#detail) 为载体移植，其它开发板可能要做些修改，有问题请请创建 issue。 
+本项目以 [ZLG 周立功 linux 开发套件 AWork 平台 iMX287A 入门级 ARM9 开发板](https://item.taobao.com/item.htm?spm=a230r.1.14.1.29c8b3f8qxjYf7&id=536334628394&ns=1&abbucket=17#detail) 为载体移植，其它开发板可能要做些修改，有问题请请创建 issue。
 
 ## 使用方法
 
@@ -15,8 +15,8 @@
 ```
 git clone https://github.com/zlgopen/awtk.git
 git clone https://github.com/zlgopen/awtk-examples.git
-git clone https://github.com/zlgopen/awtk-linux-fb.git
-cd awtk-linux-fb
+git clone https://github.com/zlgopen/awtk-linux.git
+cd awtk-linux
 ```
 
 * 2. 编辑 awtk_config.py 设置工具链的路径

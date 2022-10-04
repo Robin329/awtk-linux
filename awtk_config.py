@@ -34,6 +34,9 @@ INPUT_DIR      = joinPath(TK_LINUX_FB_ROOT, 'awtk-port/input_thread')
 
 # lcd devices
 # LCD_DEVICES='fb'
+# DEVICE_NAME='rk3399'
+# DEVICE_NAME='linux'
+DEVICE_NAME='rpi4'
 LCD_DEVICES='drm'
 # LCD_DEVICES='egl_for_fsl'
 # LCD_DEVICES='egl_for_x11'
@@ -107,7 +110,8 @@ OS_FLAGS='-Wall -Os -fno-strict-aliasing '
 #for prebuild tslib
 # TSLIB_LIB_DIR='/opt/28x/tslib/lib'
 # TSLIB_INC_DIR='/opt/28x/tslib/include'
-TOOLS_PREFIX='/home/robin/workspace/project/rk3399/ToolChain-6.3.1/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-'
+# TOOLS_PREFIX='/home/robin/workspace/project/rk3399/ToolChain-6.3.1/gcc-linaro-6.3.1-2017.05-x86_64_aarch64-linux-gnu/bin/aarch64-linux-gnu-'
+TOOLS_PREFIX='aarch64-linux-gnu-'
 
 #TOOLS_PREFIX='/opt/poky/1.7/sysroots/x86_64-pokysdk-linux/usr/bin/arm-poky-linux-gnueabi/arm-poky-linux-gnueabi-'
 
@@ -150,9 +154,15 @@ OS_FLAGS='-DAPP_STL=c++_shared -Wall -Os -DFB_DEVICE_FILENAME=\\\"\"/dev/graphic
 
 OS_LINKFLAGS= OS_LINKFLAGS + ' -Wl,-rpath=./bin -Wl,-rpath=./'
 
+if DEVICE_NAME == 'rpi4':
+  OS_FLAGS = OS_FLAGS + '/home/pi/workspace/libdrm/libdrm'
+elif DEVICE_NAME == 'rk3399':
+  OS_FLAGS = OS_FLAGS + '-I/home/ubuntu/workspace/libdrm/libdrm'
+
+
 if LCD_DEVICES =='drm' :
   #for drm
-  OS_FLAGS=OS_FLAGS + ' -DWITH_LINUX_DRM=1 -I/usr/include/libdrm -I/home/robin/workspace/project/android11/external/libdrm'
+  OS_FLAGS=OS_FLAGS + ' -DWITH_LINUX_DRM=1 -I/usr/include/libdrm'
   OS_LIBS=OS_LIBS + ['drm']
 elif LCD_DEVICES =='egl_for_fsl':
   #for egl for fsl
