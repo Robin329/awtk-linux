@@ -36,6 +36,7 @@ INPUT_DIR      = joinPath(TK_LINUX_FB_ROOT, 'awtk-port/input_thread')
 # LCD_DEVICES='fb'
 # DEVICE_NAME='rk3399'
 # DEVICE_NAME='linux'
+# DEVICE_NAME='android'
 DEVICE_NAME='rpi4'
 LCD_DEVICES='drm'
 # LCD_DEVICES='egl_for_fsl'
@@ -136,28 +137,34 @@ LD=TOOLS_PREFIX+'g++',
 AR=TOOLS_PREFIX+'ar',
 RANLIB=TOOLS_PREFIX+'ranlib',
 STRIP=TOOLS_PREFIX+'strip',
-OS_LIBS = ['c++_shared.', 'pthread', 'rt', 'm', 'dl']
+OS_LIBS = [ 'pthread', 'rt', 'm', 'dl']
+
+if DEVICE_NAME == 'rpi4':
+  OS_FLAGS = OS_FLAGS + ' /home/pi/workspace/libdrm/libdrm '
+  OS_LIBS = OS_LIBS + ['stdc++']
+elif DEVICE_NAME == 'rk3399':
+  OS_FLAGS = OS_FLAGS + ' -I/home/ubuntu/workspace/libdrm/libdrm '
+elif DEVICE_NAME == 'android':
+  OS_FLAGS = OS_FLAGS + ' -DAPP_STL=c++_shared -DANDROID_STL=c++_shared'
+  OS_LIBS = OS_LIBS + ['c++_shared']
 
 #for android
 TSLIB_LIB_DIR=''
 TSLIB_INC_DIR=''
-TOOLS_PREFIX='/home/robin/workspace/tools/android-ndk-r21e/toolchain/bin/'
-CC=TOOLS_PREFIX+'aarch64-linux-android-gcc'
-CXX=TOOLS_PREFIX+'aarch64-linux-android-g++'
-LD=TOOLS_PREFIX+'aarch64-linux-android-ld'
-AR=TOOLS_PREFIX+'aarch64-linux-android-ar'
-STRIP=TOOLS_PREFIX+'aarch64-linux-android-strip'
-RANLIB=TOOLS_PREFIX+"aarch64-linux-android-ranlib"
+# TOOLS_PREFIX='/home/robin/workspace/tools/android-ndk-r21e/toolchain/bin/'
+# CC=TOOLS_PREFIX+'aarch64-linux-android-gcc'
+# CXX=TOOLS_PREFIX+'aarch64-linux-android-g++'
+# LD=TOOLS_PREFIX+'aarch64-linux-android-ld'
+# AR=TOOLS_PREFIX+'aarch64-linux-android-ar'
+# STRIP=TOOLS_PREFIX+'aarch64-linux-android-strip'
+# RANLIB=TOOLS_PREFIX+"aarch64-linux-android-ranlib"
+# ----------------------------------------------
+
 OS_LINKFLAGS=' -Wl,--allow-multiple-definition '
-OS_LIBS = ['c++_shared', 'm']
-OS_FLAGS='-DAPP_STL=c++_shared -Wall -Os -DFB_DEVICE_FILENAME=\\\"\"/dev/graphics/fb0\\\"\" -DANDROID_STL=c++_shared'
+OS_LIBS = OS_LIBS + ['m']
+OS_FLAGS=' -Wall -Os -DFB_DEVICE_FILENAME=\\\"\"/dev/graphics/fb0\\\"\" '
 
 OS_LINKFLAGS= OS_LINKFLAGS + ' -Wl,-rpath=./bin -Wl,-rpath=./'
-
-if DEVICE_NAME == 'rpi4':
-  OS_FLAGS = OS_FLAGS + '/home/pi/workspace/libdrm/libdrm'
-elif DEVICE_NAME == 'rk3399':
-  OS_FLAGS = OS_FLAGS + '-I/home/ubuntu/workspace/libdrm/libdrm'
 
 
 if LCD_DEVICES =='drm' :

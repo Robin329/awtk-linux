@@ -39,7 +39,7 @@
 #endif /*FB_DEVICE_FILENAME*/
 
 #ifndef DRM_DEVICE_FILENAME
-#define DRM_DEVICE_FILENAME "/dev/dri/card0"
+#define DRM_DEVICE_FILENAME "/dev/dri/card1"
 #endif /*DRM_DEVICE_FILENAME*/
 
 #ifndef TS_DEVICE_FILENAME

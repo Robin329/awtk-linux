@@ -102,7 +102,7 @@ static int match_config_to_visual(EGLDisplay egl_display, EGLint visual_id, EGLC
 }
 
 static void swap_buffers (egl_devices_gbm_context_t* context) {
-  struct gbm_bo *bo = NULL;	
+  struct gbm_bo *bo = NULL;
   uint32_t handle = 0;
   uint32_t pitch = 0;
   uint32_t width = 0;
@@ -136,7 +136,7 @@ static void init_ogl(egl_devices_gbm_context_t *ctx) {
 
   ctx->device = open ("/dev/dri/by-path/platform-gpu-card", O_RDWR);
   if (ctx->device < 0) {
-    ctx->device = open ("/dev/dri/card0", O_RDWR);
+    ctx->device = open (DRM_DEVICE_FILENAME, O_RDWR);
   }
   resources = drmModeGetResources (ctx->device);
   connector = find_connector (ctx->device, resources);
@@ -207,7 +207,7 @@ ret_t egl_devices_dispose(void* ctx) {
   egl_devices_gbm_context_t* context = (egl_devices_gbm_context_t*)ctx;
   return_value_if_fail(context != NULL, RET_BAD_PARAMS);
 
-  drmModeSetCrtc (context->device, context->crtc->crtc_id, context->crtc->buffer_id, 
+  drmModeSetCrtc (context->device, context->crtc->crtc_id, context->crtc->buffer_id,
     context->crtc->x, context->crtc->y, &context->connector_id, 1, &context->crtc->mode);
   drmModeFreeCrtc (context->crtc);
 
